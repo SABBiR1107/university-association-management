@@ -282,5 +282,22 @@ For support and questions:
 
 ---
 
-**Built with ❤️ for university student associations**
+---
+
+## 👨‍💻 Developer Credit
+
+**Developed by:** [Ahsanur Rahman Sabbir](https://github.com/SABBIR1107)
+
+🎓 *B.Sc. in Software Engineering, Daffodil International University (DIU)*  
+💡 *Passionate about AI, Data Science, and Full-Stack Development*  
+📧 **Contact:** ahsanursabbir.@gmail.com  
+🌐 **Portfolio:** [ahsanursabbir.me](https://ahsanursabbir.me) *(if available)*  
+🐙 **GitHub:** [github.com/ahsanursabbir](https://github.com/SABBiR1107)  
+💼 **LinkedIn:** [linkedin.com/in/ahsanursabbir](https://linkedin.com/in/md-ahsanur-rahman-sabbir1107/)
+
+---
+
+**Built with ❤️ by Ahsanur Rahman Sabbir for university student associations**
+
+
 
