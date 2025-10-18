@@ -84,7 +84,45 @@ association/
 │   └── feed/           # Post images
 └── manage.py           # Django management script
 ```
+## 🖼️ Project Preview
 
+### 🏠 Home Page
+<img width="1850" height="920" alt="Screenshot 2025-10-18 234211" src="https://github.com/user-attachments/assets/da0b899f-ee18-4f72-b605-a1e1adb69670" />
+
+
+### 👥 Our Team
+<img width="1852" height="926" alt="Screenshot 2025-10-18 234238" src="https://github.com/user-attachments/assets/9cff912c-e089-4636-8ae5-293ac1537002" />
+
+### Event 
+<img width="1848" height="922" alt="Screenshot 2025-10-18 234257" src="https://github.com/user-attachments/assets/9accb7f5-1748-49cc-873c-4c19699ff8a2" />
+
+
+### 📰 Feed
+<img width="1864" height="927" alt="Screenshot 2025-10-18 234305" src="https://github.com/user-attachments/assets/39ccc00f-f853-49a3-936b-6dbc6d7b1e98" />
+
+### 📞 Contact Page
+<img width="1857" height="915" alt="Screenshot 2025-10-18 234313" src="https://github.com/user-attachments/assets/cada999b-c788-4a74-aaf6-57abdf454a5c" />
+
+
+##  Admin
+<img width="1866" height="927" alt="Screenshot 2025-10-18 234334" src="https://github.com/user-attachments/assets/3f3af195-4c90-45bf-8357-ec6fad57eb98" />
+
+
+
+---
+
+## 🎥 Demo Video
+
+Watch the full demo below 👇
+
+
+https://github.com/user-attachments/assets/6922a48c-fa66-4c66-beae-2cb3a1059c71
+
+
+
+> 🎬 *Click the thumbnail to watch the project walkthrough on YouTube.*
+
+---
 ## 🚀 Installation & Setup
 
 ### Prerequisites
@@ -245,3 +283,4 @@ For support and questions:
 ---
 
 **Built with ❤️ for university student associations**
+
