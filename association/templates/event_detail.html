@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.title }} - Student Association{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 2rem 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <h1>{{ event.title }}</h1>
+        <div style="color: white; opacity: 0.9; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-calendar"></i> {{ event.date|date:"F d, Y H:i" }}
+            </span>
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-map-marker-alt"></i> {{ event.location }}
+            </span>
+            {% if event.organizer %}
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-user"></i> Organized by {{ event.organizer }}
+            </span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section id="event-detail" style="padding: 3rem 0;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+            <!-- Main Event Content -->
+            <div style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden;">
+                <div style="height: 400px; overflow: hidden;">
+                    {% if event.image %}
+                        <img src="{{ event.image.url }}" alt="{{ event.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-calendar-alt" style="font-size: 4rem;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div style="padding: 2rem;">
+                    <div style="margin-bottom: 2rem;">
+                        <h2 style="color: #333; margin-bottom: 1rem; font-size: 1.5rem;">About This Event</h2>
+                        <div style="line-height: 1.8; color: #555; font-size: 1.1rem;">
+                            {{ event.description|linebreaks }}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: #333; margin-bottom: 1.5rem; font-size: 1.3rem;">Event Details</h3>
+                        <div style="display: grid; gap: 1.5rem;">
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <i class="fas fa-calendar" style="color: #667eea; font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <strong style="color: #333; margin-bottom: 0.3rem; display: block;">Date & Time</strong>
+                                    <span style="color: #666; display: block;">{{ event.date|date:"l, F d, Y" }}</span>
+                                    <span style="color: #666; display: block;">{{ event.date|date:"H:i A" }}</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <i class="fas fa-map-marker-alt" style="color: #667eea; font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <strong style="color: #333; margin-bottom: 0.3rem; display: block;">Location</strong>
+                                    <span style="color: #666;">{{ event.location }}</span>
+                                </div>
+                            </div>
+                            
+                            {% if event.organizer %}
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <i class="fas fa-user" style="color: #667eea; font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <strong style="color: #333; margin-bottom: 0.3rem; display: block;">Organizer</strong>
+                                    <span style="color: #666;">{{ event.organizer }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <i class="fas fa-clock" style="color: #667eea; font-size: 1.2rem; margin-top: 0.2rem;"></i>
+                                <div>
+                                    <strong style="color: #333; margin-bottom: 0.3rem; display: block;">Status</strong>
+                                    <span style="padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; 
+                                          {% if event.is_upcoming %}background: #d4edda; color: #155724;{% else %}background: #f8d7da; color: #721c24;{% endif %}">
+                                        {% if event.is_upcoming %}
+                                            Upcoming
+                                        {% else %}
+                                            Past Event
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if event.is_upcoming %}
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button onclick="addToCalendar()" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 5px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                            <i class="fas fa-calendar-plus"></i> Add to Calendar
+                        </button>
+                        <button onclick="shareEvent()" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 12px 24px; background: #764ba2; color: white; border: none; border-radius: 5px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                            <i class="fas fa-share"></i> Share Event
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Event Sidebar -->
+            <div style="position: sticky; top: 2rem;">
+                {% if event.is_upcoming %}
+                <div style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 1.5rem; margin-bottom: 2rem;">
+                    <h4 style="color: #333; margin-bottom: 1rem; font-size: 1.1rem;">Event Countdown</h4>
+                    <div id="countdown" data-event-date="{{ event.date|date:'c' }}" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; text-align: center;">
+                        <div style="background: #f8f9fa; padding: 1rem 0.5rem; border-radius: 5px;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: 700; color: #667eea;" id="days">00</span>
+                            <span style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Days</span>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem 0.5rem; border-radius: 5px;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: 700; color: #667eea;" id="hours">00</span>
+                            <span style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Hours</span>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem 0.5rem; border-radius: 5px;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: 700; color: #667eea;" id="minutes">00</span>
+                            <span style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Minutes</span>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem 0.5rem; border-radius: 5px;">
+                            <span style="display: block; font-size: 1.5rem; font-weight: 700; color: #667eea;" id="seconds">00</span>
+                            <span style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <h4 style="color: #333; margin-bottom: 1rem; font-size: 1.1rem;">Share Event</h4>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="shareOnFacebook()" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: #3b5998; color: white; font-size: 0.9rem; cursor: pointer;">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button onclick="shareOnTwitter()" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: #1da1f2; color: white; font-size: 0.9rem; cursor: pointer;">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button onclick="shareOnWhatsApp()" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: #25d366; color: white; font-size: 0.9rem; cursor: pointer;">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button onclick="copyEventLink()" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: #667eea; color: white; font-size: 0.9rem; cursor: pointer;">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Countdown timer
+    const countdownElement = document.getElementById('countdown');
+    if (countdownElement) {
+        const eventDate = new Date(countdownElement.dataset.eventDate).getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div style="text-align: center; color: #28a745; font-weight: 600;">Event has started!</div>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+});
+
+function addToCalendar() {
+    showNotification('Calendar event feature coming soon!', 'info');
+}
+
+function shareEvent() {
+    if (navigator.share) {
+        navigator.share({
+            title: "{{ event.title }}",
+            text: "{{ event.description|striptags|truncatewords:20 }}",
+            url: window.location.href
+        });
+    } else {
+        copyEventLink();
+    }
+}
+
+function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareOnTwitter() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent("Check out this event: {{ event.title }}");
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+}
+
+function shareOnWhatsApp() {
+    const text = encodeURIComponent("Check out this event: {{ event.title }} - " + window.location.href);
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function copyEventLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        showNotification('Event link copied to clipboard!', 'success');
+    }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Event link copied to clipboard!', 'success');
+    });
+}
+</script>
+{% endblock %}

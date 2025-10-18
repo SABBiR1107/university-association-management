@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Team - Student Association{% endblock %}
+
+{% block content %}
+    <section class="hero" style="padding: 3rem 0; background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);">
+        <div class="container">
+            <h1>Our Team</h1>
+            <p>Meet the dedicated students working for your welfare</p>
+        </div>
+    </section>
+
+    <section id="all-members" style="padding: 4rem 0;">
+        <div class="container">
+            {% for division in divisions %}
+            <div style="margin-bottom: 4rem;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2 style="font-size: 2rem; color: #333; margin-bottom: 0.5rem;">{{ division.name }} Division Student Association</h2>
+                    <p style="color: #666;">{{ division.description|default:"Dedicated team working for student welfare" }}</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    {% for position in division.positions.all %}
+                        {% for member in position.members.all %}
+                            {% if member.is_active %}
+                            <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                                <div style="width: 100%; height: 200px; background: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                                    {% if member.image %}
+                                        <img src="{{ member.image.url }}" alt="{{ member.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <i class="fas fa-user"></i>
+                                    {% endif %}
+                                </div>
+                                <div style="padding: 1.5rem;">
+                                    <h4 style="color: #333; margin-bottom: 0.5rem; font-size: 1.2rem;">{{ member.name }}</h4>
+                                    <div style="color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">{{ position.name }}</div>
+                                    {% if member.academic_year %}
+                                    <div style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                        {{ member.academic_year }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <!-- Contact Information -->
+                                    {% if member.phone or member.email %}
+                                    <div style="margin: 1rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #667eea;">
+                                        {% if member.phone %}
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #333;">
+                                            <i class="fas fa-phone" style="color: #667eea; width: 16px;"></i>
+                                            <a href="tel:{{ member.phone }}" style="color: #333; text-decoration: none; font-size: 0.9rem;">{{ member.phone }}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if member.email %}
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #333;">
+                                            <i class="fas fa-envelope" style="color: #667eea; width: 16px;"></i>
+                                            <a href="mailto:{{ member.email }}" style="color: #333; text-decoration: none; font-size: 0.9rem;">{{ member.email }}</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <p style="color: #666; font-size: 0.9rem;">{{ member.bio|default:"Committed to student success." }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% empty %}
+                            {% if forloop.first %}
+                            <div style="text-align: center; grid-column: 1 / -1; color: #666;">
+                                <p>No members added to {{ division.name }} division yet.</p>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div style="text-align: center;">
+                <h2>No Divisions Added</h2>
+                <p>Please add divisions and members through the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

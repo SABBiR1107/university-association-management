@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Student Association{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 2rem 0; background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);">
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <div style="color: white; opacity: 0.9; display: flex; gap: 1rem; margin-top: 1rem;">
+            <span>By {{ post.author }}</span>
+            <span>{{ post.created_at|date:"F d, Y" }}</span>
+        </div>
+    </div>
+</section>
+
+<section id="post-detail" style="padding: 3rem 0;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+            <!-- Post Content -->
+            <div style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden;">
+                {% if post.image %}
+                <div style="height: 400px; overflow: hidden;">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                {% endif %}
+                
+                <div style="padding: 2rem;">
+                    <div style="line-height: 1.8; color: #555; font-size: 1.1rem; margin-bottom: 2rem;">
+                        {{ post.content|linebreaks }}
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                        <button class="like-btn" 
+                                data-post-id="{{ post.id }}" 
+                                data-session-id="{{ session_id }}"
+                                style="display: flex; align-items: center; gap: 0.5rem; padding: 10px 20px; border: 1px solid #ddd; border-radius: 25px; background: white; color: #666; cursor: pointer; transition: all 0.3s ease;">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-count">{{ post.like_count }}</span> Likes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 2rem;">
+                <h3 style="color: #333; margin-bottom: 1.5rem; font-size: 1.3rem;">Comments ({{ post.comment_count }})</h3>
+                
+                <!-- Comment Form -->
+                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee;">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div style="margin-bottom: 1rem;">
+                            <input type="text" name="author_name" placeholder="Your Name" required 
+                                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <textarea name="content" placeholder="Write your comment..." required 
+                                      style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; min-height: 100px;"></textarea>
+                        </div>
+                        <button type="submit" style="background: #667eea; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: 500;">
+                            Post Comment
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Comments List -->
+                <div>
+                    {% for comment in post.comments.all %}
+                    {% if comment.is_approved %}
+                    <div style="padding: 1.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <strong style="color: #333;">{{ comment.author_name }}</strong>
+                            <span style="color: #888; font-size: 0.8rem;">{{ comment.created_at|date:"M d, Y H:i" }}</span>
+                        </div>
+                        <div style="color: #555; line-height: 1.6;">
+                            {{ comment.content|linebreaks }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% empty %}
+                    <div style="text-align: center; padding: 2rem; color: #888;">
+                        <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>No comments yet. Be the first to comment!</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Like functionality
+    const likeBtn = document.querySelector('.like-btn');
+    if (likeBtn) {
+        likeBtn.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            const sessionId = this.dataset.sessionId;
+            
+            fetch(`/feed/post/${postId}/like/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: `session_id=${sessionId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked !== undefined) {
+                    const likeCount = this.querySelector('.like-count');
+                    likeCount.textContent = data.like_count;
+                    
+                    if (data.liked) {
+                        this.classList.add('liked');
+                        this.style.background = '#ff6b6b';
+                        this.style.color = 'white';
+                        this.style.borderColor = '#ff6b6b';
+                        showNotification('Post liked!', 'success');
+                    } else {
+                        this.classList.remove('liked');
+                        this.style.background = 'white';
+                        this.style.color = '#666';
+                        this.style.borderColor = '#ddd';
+                        showNotification('Post unliked!', 'info');
+                    }
+                }
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

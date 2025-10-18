@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Student Association{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>University Student Association</h1>
+            <p>Empowering students, building community, and creating memorable campus experiences</p>
+            <a href="/members/" class="btn">Meet Our Team</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="padding: 4rem 0;">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem;">About Our Association</h2>
+                <p style="font-size: 1.1rem; color: #666; line-height: 1.8;">
+                    The University Student Association is the central governing body that represents all students 
+                    and works tirelessly to enhance campus life. We organize academic, cultural, sports, and social 
+                    events while ensuring student voices are heard in university decision-making processes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Team Section -->
+    <section id="core-team" style="background: #f1f5f9; padding: 4rem 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem;">Core Executive Team</h2>
+                <p style="color: #666; font-size: 1.1rem;">Meet the leadership driving our association forward</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                {% for member in core_members %}
+                <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+                    <div style="width: 100%; height: 200px; background: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="color: #333; margin-bottom: 0.5rem; font-size: 1.2rem;">{{ member.name }}</h4>
+                        <div style="color: #667eea; font-weight: 600; margin-bottom: 0.5rem;">{{ member.position.name }}</div>
+                        <p style="color: #666; font-size: 0.9rem;">{{ member.bio|default:"Dedicated to serving the student community." }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div style="text-align: center; grid-column: 1 / -1;">
+                    <p>No core team members added yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Student Association{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Get in touch with your student representatives</p>
+    </div>
+</section>
+
+<section id="contact" style="padding: 4rem 0;">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem;">We'd Love to Hear From You</h2>
+            <p style="color: #666; font-size: 1.1rem;">Reach out to us for any queries, suggestions, or concerns</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem;">
+            <!-- Contact Information -->
+            <div>
+                <h3 style="color: #667eea; margin-bottom: 2rem; font-size: 1.3rem;">Get In Touch</h3>
+                
+                <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #667eea; color: white; padding: 1rem; border-radius: 50%;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; color: #333;">Office Location</h4>
+                        <p style="color: #666;">Student Association Office<br>University Campus<br>Main Building, Room 101</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #667eea; color: white; padding: 1rem; border-radius: 50%;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; color: #333;">Email Us</h4>
+                        <p style="color: #666;">association@university.edu<br>General inquiries and support</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #667eea; color: white; padding: 1rem; border-radius: 50%;">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; color: #333;">Call Us</h4>
+                        <p style="color: #666;">+1 (555) 123-4567<br>Office Hours: 9 AM - 5 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div>
+                <h3 style="color: #667eea; margin-bottom: 2rem; font-size: 1.3rem;">Send Message</h3>
+                <form style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333;">Your Name</label>
+                        <input type="text" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" placeholder="Enter your name">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333;">Your Email</label>
+                        <input type="email" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" placeholder="Enter your email">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333;">Subject</label>
+                        <input type="text" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" placeholder="Enter subject">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333;">Message</label>
+                        <textarea style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; min-height: 120px;" placeholder="Enter your message"></textarea>
+                    </div>
+                    
+                    <button type="submit" style="background: #667eea; color: white; padding: 12px 30px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: background 0.3s ease; width: 100%;">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Office Hours Section -->
+<section style="background: #f1f5f9; padding: 3rem 0;">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="font-size: 2rem; color: #333; margin-bottom: 1rem;">Office Hours</h2>
+            <p style="color: #666;">Visit us during our working hours</p>
+        </div>
+        
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #eee;">
+                <span style="color: #333;">Monday - Friday</span>
+                <span style="font-weight: 600; color: #667eea;">9:00 AM - 5:00 PM</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #eee;">
+                <span style="color: #333;">Saturday</span>
+                <span style="font-weight: 600; color: #667eea;">10:00 AM - 2:00 PM</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0;">
+                <span style="color: #333;">Sunday</span>
+                <span style="font-weight: 600; color: #dc3545;">Closed</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
